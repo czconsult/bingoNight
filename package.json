@@ -13,7 +13,9 @@
     "audio-biquad": "^1.1.3",
     "enttec-open-dmx-usb": "^3.0.1",
     "express": "^4.18.2",
-    "music-beat-detector": "^0.1.1",
-    "naudiodon": "^2.3.6"
+    "music-beat-detector": "git@github.com:chris-doyle/music-beat-detector.git",
+    "naudiodon": "^2.3.6",
+    "osc": "^2.4.3",
+    "socket.io": "^4.5.3"
   }
 }

@@ -9,3 +9,11 @@ Toolkit for Bingo Night
 5, Cueing
 6, Show Control
 7, Bingo Engine
+
+
+
+const firFilterCoeffs = firCalculator.bandpass({  
+  Fs: FREQ,
+  F1: 48,
+  F2: 384
+})

@@ -22,7 +22,7 @@ const test = async () => {
     device.startSending(25)
   })
 
-  console.log(device)
+  //console.log(device)
 
 
 
@@ -38,7 +38,7 @@ const test = async () => {
     }
   });
 
-
+/*
   var ao = new portAudio.AudioIO({
     outOptions: {
       channelCount: 2,
@@ -48,7 +48,7 @@ const test = async () => {
       closeOnError: false // Close the stream if an audio error is detected, if set false then just log the error
     }
   });
-
+*/
 
   var ws = fs.createWriteStream('rawAudio.raw');
 
@@ -63,7 +63,7 @@ const test = async () => {
     minThreashold: 1638 //1638
   })
 
-  var ws = fs.createWriteStream('rawAudio.raw');
+  var ws = fs.createWriteStream('/dev/null');
   const analyser = musicBeatDetector.getAnalyzer()
 
   /*
@@ -104,7 +104,6 @@ const test = async () => {
         console.log(peak)
         switch(peak.x) {
           case 0:
-            console.log('low')
             flash(0x07, 255, 100)
             flash(0x08, 1, 100)
             flash(0x09, 1, 100)
@@ -124,15 +123,15 @@ const test = async () => {
       console.log('end')
     })
     .on('open', () => musicBeatScheduler.start())
-  .pipe(ao)
-  ao.start()
+  .pipe(ws)
+  //ao.start()
   ai.start()
 
 
 
   process.on("SIGINT", ()=>{
     ai.quit()
-    ao.quit()
+    //ao.quit()
     process.exit(0)
   });
 

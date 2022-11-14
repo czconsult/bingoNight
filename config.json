@@ -1,0 +1,340 @@
+{
+  "numBalls":90,
+  "qlab":{
+    "server":"127.0.0.1",
+    "port":53000
+  },
+  "actions":[
+    {
+      "title":"Pause",
+      "backgroundColor":"#0000ff",
+      "cue":"/cue/PAUSE/start",
+      "id":0
+    },
+    {
+      "title":"Continue",
+      "backgroundColor":"#00ff00",
+      "cue":"/cue/CONTINUE/start",
+      "id":1
+    },
+    {
+      "title":"New Game",
+      "backgroundColor":"#ff0000",
+      "id":2,
+      "cue":"/cue/NEWGAME/start"
+    },
+    { 
+      "title":"Next Ball",
+      "backgroundColor":"#ddd",
+      "id":3
+    },
+    { "title":"Check Results",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/CHECK/start",
+      "id":4
+    },
+    { 
+      "title":"False Call",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/FALSE/start",
+      "id":5
+    },
+    { "title":"Head To Head",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/H2H/start",
+      "id":6
+    },
+    { "title":"Winner",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/WINNER/start",
+      "id":7
+    },
+    { 
+      "title":"Chaos!",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/CHAOS/start",
+      "id":8
+    },
+    {
+      "title":"Prize intro",
+      "backgroundColor":"#ddd",
+      "cue":"/cue/PRIZES/start",
+      "id":9
+    }
+  ],
+  "balls":{
+    "0": {
+      "cue": "/cue/0/start"
+    },
+    "1": {
+      "cue": "/cue/1/start"
+    },
+    "2": {
+      "cue": "/cue/2/start"
+    },
+    "3": {
+      "cue": "/cue/3/start"
+    },
+    "4": {
+      "cue": "/cue/4/start"
+    },
+    "5": {
+      "cue": "/cue/5/start"
+    },
+    "6": {
+      "cue": "/cue/6/start"
+    },
+    "7": {
+      "cue": "/cue/7/start"
+    },
+    "8": {
+      "cue": "/cue/8/start"
+    },
+    "9": {
+      "cue": "/cue/9/start"
+    },
+    "10": {
+      "cue": "/cue/10/start"
+    },
+    "11": {
+      "cue": "/cue/11/start"
+    },
+    "12": {
+      "cue": "/cue/12/start"
+    },
+    "13": {
+      "cue": "/cue/13/start"
+    },
+    "14": {
+      "cue": "/cue/14/start"
+    },
+    "15": {
+      "cue": "/cue/15/start"
+    },
+    "16": {
+      "cue": "/cue/16/start"
+    },
+    "17": {
+      "cue": "/cue/17/start"
+    },
+    "18": {
+      "cue": "/cue/18/start"
+    },
+    "19": {
+      "cue": "/cue/19/start"
+    },
+    "20": {
+      "cue": "/cue/20/start"
+    },
+    "21": {
+      "cue": "/cue/21/start"
+    },
+    "22": {
+      "cue": "/cue/22/start"
+    },
+    "23": {
+      "cue": "/cue/23/start"
+    },
+    "24": {
+      "cue": "/cue/24/start"
+    },
+    "25": {
+      "cue": "/cue/25/start"
+    },
+    "26": {
+      "cue": "/cue/26/start"
+    },
+    "27": {
+      "cue": "/cue/27/start"
+    },
+    "28": {
+      "cue": "/cue/28/start"
+    },
+    "29": {
+      "cue": "/cue/29/start"
+    },
+    "30": {
+      "cue": "/cue/30/start"
+    },
+    "31": {
+      "cue": "/cue/31/start"
+    },
+    "32": {
+      "cue": "/cue/32/start"
+    },
+    "33": {
+      "cue": "/cue/33/start"
+    },
+    "34": {
+      "cue": "/cue/34/start"
+    },
+    "35": {
+      "cue": "/cue/35/start"
+    },
+    "36": {
+      "cue": "/cue/36/start"
+    },
+    "37": {
+      "cue": "/cue/37/start"
+    },
+    "38": {
+      "cue": "/cue/38/start"
+    },
+    "39": {
+      "cue": "/cue/39/start"
+    },
+    "40": {
+      "cue": "/cue/40/start"
+    },
+    "41": {
+      "cue": "/cue/41/start"
+    },
+    "42": {
+      "cue": "/cue/42/start"
+    },
+    "43": {
+      "cue": "/cue/43/start"
+    },
+    "44": {
+      "cue": "/cue/44/start"
+    },
+    "45": {
+      "cue": "/cue/45/start"
+    },
+    "46": {
+      "cue": "/cue/46/start"
+    },
+    "47": {
+      "cue": "/cue/47/start"
+    },
+    "48": {
+      "cue": "/cue/48/start"
+    },
+    "49": {
+      "cue": "/cue/49/start"
+    },
+    "50": {
+      "cue": "/cue/50/start"
+    },
+    "51": {
+      "cue": "/cue/51/start"
+    },
+    "52": {
+      "cue": "/cue/52/start"
+    },
+    "53": {
+      "cue": "/cue/53/start"
+    },
+    "54": {
+      "cue": "/cue/54/start"
+    },
+    "55": {
+      "cue": "/cue/55/start"
+    },
+    "56": {
+      "cue": "/cue/56/start"
+    },
+    "57": {
+      "cue": "/cue/57/start"
+    },
+    "58": {
+      "cue": "/cue/58/start"
+    },
+    "59": {
+      "cue": "/cue/59/start"
+    },
+    "60": {
+      "cue": "/cue/60/start"
+    },
+    "61": {
+      "cue": "/cue/61/start"
+    },
+    "62": {
+      "cue": "/cue/62/start"
+    },
+    "63": {
+      "cue": "/cue/63/start"
+    },
+    "64": {
+      "cue": "/cue/64/start"
+    },
+    "65": {
+      "cue": "/cue/65/start"
+    },
+    "66": {
+      "cue": "/cue/66/start"
+    },
+    "67": {
+      "cue": "/cue/67/start"
+    },
+    "68": {
+      "cue": "/cue/68/start"
+    },
+    "69": {
+      "cue": "/cue/69/start"
+    },
+    "70": {
+      "cue": "/cue/70/start"
+    },
+    "71": {
+      "cue": "/cue/71/start"
+    },
+    "72": {
+      "cue": "/cue/72/start"
+    },
+    "73": {
+      "cue": "/cue/73/start"
+    },
+    "74": {
+      "cue": "/cue/74/start"
+    },
+    "75": {
+      "cue": "/cue/75/start"
+    },
+    "76": {
+      "cue": "/cue/76/start"
+    },
+    "77": {
+      "cue": "/cue/77/start"
+    },
+    "78": {
+      "cue": "/cue/78/start"
+    },
+    "79": {
+      "cue": "/cue/79/start"
+    },
+    "80": {
+      "cue": "/cue/80/start"
+    },
+    "81": {
+      "cue": "/cue/81/start"
+    },
+    "82": {
+      "cue": "/cue/82/start"
+    },
+    "83": {
+      "cue": "/cue/83/start"
+    },
+    "84": {
+      "cue": "/cue/84/start"
+    },
+    "85": {
+      "cue": "/cue/85/start"
+    },
+    "86": {
+      "cue": "/cue/86/start"
+    },
+    "87": {
+      "cue": "/cue/87/start"
+    },
+    "88": {
+      "cue": "/cue/88/start"
+    },
+    "89": {
+      "cue": "/cue/89/start"
+    },    
+    "90": {
+      "cue": "/cue/90/start"
+    }    
+  }
+}

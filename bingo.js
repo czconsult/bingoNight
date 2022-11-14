@@ -1,8 +1,10 @@
 const fs = require('fs')
-const folder = './games'
+const EventEmitter = require('events');
+const folder = '../games'
 
-class BingoGame {
+class BingoGame extends EventEmitter {
   constructor({numBalls,gameId}) {
+    super()
     if(numBalls) {
       this.numBalls = numBalls
       this.gameId = Date.now()
@@ -27,6 +29,15 @@ class BingoGame {
   get GameId() {
     return this.gameId
   }
+  get status() {
+    const status = {
+      ballsTaken:this.current+1,
+      currentBall:this.sequence[this.current] || ' ',
+      ballsUsed:this.used,
+      gameId:this.gameId
+    }
+    return JSON.stringify(status, null, 2)
+  }
   shuffle(array) {
     let currentIndex = array.length,  randomIndex;
   
@@ -50,14 +61,20 @@ class BingoGame {
       this.sequence.push(x)
     }
     this.shuffle(this.sequence)
+    this.current=-1
+    this.used.length = 0
+    this.emit('new-game')
+    console.log(this)
+
   }
   static factory(numBalls) {
     const game = new BingoGame({numBalls})
     return game
   }  
   next() {
-    this.used.push(this.sequence[this.current])
     this.current++
+    this.used.push(this.sequence[this.current])
+    this.emit('next', this.sequence[this.current])
     return this.sequence[this.current]
   }
   save() {
@@ -81,4 +98,4 @@ for(var x = 0;x<90;x++) {
 }
 g.save()
 const g1 = BingoGame.load(g.GameId)
-console.log('g1', g1)
+

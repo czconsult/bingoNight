@@ -3,6 +3,9 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto">
     <style>
       html, body {
         width:100%;
@@ -12,6 +15,7 @@
         overflow:none;
         padding:0px;
         margin:0px;
+        font-family: 'Roboto', serif;
       }
       .container {
         display:flex;
@@ -29,12 +33,27 @@
         display:flex;
         flex:2;
         flex-direction: row;
+        margin: 12px;
       }
       .right {
         border:1px solid #333;
         display: flex;
         flex:2;      
         flex-wrap: wrap;
+        
+        margin: 12px;
+      }
+      .status {
+        display: flex;
+        flex:1;      
+        flex-direction: column;
+      }
+      .current {
+        display:flex;
+        flex:1;
+        align-items: center;
+        justify-content: center;
+        font-size: 300px;
       }
       .control {
         display:flex;
@@ -49,20 +68,22 @@
       .numberGrid {
         display:flex;
         flex-direction: row;
-        height:300px;      
         align-items: stretch;
-        flex:1;
+        flex:1;        
       }
       .col {
         display:flex;
         flex:1;
         flex-direction: column;
         align-items: stretch;
-
       }
       .cell {
         flex:1;
+        border:1px solid#222;
         display:flex;
+        align-items: center;
+        justify-content: center;
+        min-height:50px;
       }
     </style>
   </head>
