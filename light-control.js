@@ -58,6 +58,22 @@ const sceneConfig = {
       [6,[28]],
       [7,[28]],
     ]
+  },
+  "Dark":{
+    type:'default',
+    control:[
+      [1,[0]],
+      [2,[0]],
+      [3,[0]],
+      [4,[0]],
+      [5,[0]],
+      [6,[0]],
+      [7,[0]],
+      [8,[0]],
+      [9,[0]],
+      [10,[0]],
+      [11,[0]],
+    ]
   }
 }
 
@@ -66,8 +82,7 @@ const sceneConfig = {
 class LightControl {
   constructor() {    
   }
-  async init() {
-    this.device = new DMXDevice(await DMXDevice.getFirstAvailableDevice(), false)
+  clear() {
     this.device.setChannels({
       1: 0x00, // L1 - R - 0 or 1
       2: 0x00, // L1 - G - 0 or 1
@@ -81,10 +96,14 @@ class LightControl {
       10: 0x00, // L2 - Mo 0 or FF
       11: 0x00, // L2 - Strobe 0 -> 255 for speed 0 = none 255 = epilepsy!
     })
+  }
+  async init() {
+    this.device = new DMXDevice(await DMXDevice.getFirstAvailableDevice(), false)
     this.device.on('ready',() => {
       this.device.startSending(25)
     })
     this.Scene = 'Ambient'
+    this.clear()
   }
   setChannel(id, value) {
     //console.log({[id]: value})
@@ -98,7 +117,9 @@ class LightControl {
     }, duration)
   }
   runScene() {
-    const scene = sceneConfig[this.scene]
+    console.log('running scene')
+    this.clear()
+    let scene = sceneConfig[this.scene]
     const sceneAtStart = this.scene
     scene.control.forEach((s) => {
       console.log(s)
@@ -108,7 +129,8 @@ class LightControl {
       }
       if(s.length === 1) {
         this.setChannel(channel,s[0][0])
-      } else {
+      } else {        
+        
         const i = setInterval(() => {
           if(this.scene !== sceneAtStart) {
             clearInterval(i)
@@ -121,6 +143,7 @@ class LightControl {
 
   }
   set Scene(newScene) {
+    console.log('setting scene', newScene)
     this.scene = newScene
     const scene = sceneConfig[this.scene]
     if(scene.type === 'default') {

@@ -77,11 +77,18 @@ const init = async () => {
       break;
       case 'stopTrack':
         return stop()
+      break;
+      case 'scene':
+        console.log('seeting scene')
+        lightControl.Scene = msg.args[0]
+        return 
     }
   })
 
   const sendBallCue = (ball) => {    
     const cfg = config.balls[ball]
+    console.log(config.qlab)
+    console.log(cfg)
     udpPort.send({
       timeTag:osc.timeTag(0),
       packets:[
