@@ -10,6 +10,7 @@ const Bingo = require('./bingo')
 var readline = require('readline');
 const io = require('socket.io')(server);
 const osc = require('osc')
+const applescript = require('applescript')
 
 
 
@@ -19,26 +20,73 @@ const osc = require('osc')
 
 //app.use(express.static('public'))
 
-const config = require('./config.json')
+const config = require('./config')
+const MusicBeat = require('./music-beat')
+const LightControl = require('./light-control')
+console.log("config", config)
 
 const init = async () => {
 
   const bingo = Bingo.factory(config.numBalls)
+  const musicBeat = new MusicBeat(2)
+  const lightControl = new LightControl()
+  lightControl.init()
+  musicBeat.start()
+  musicBeat.on('low', () => {
+    lightControl.low()
+  })
+  musicBeat.on('mid', () => {
+    lightControl.mid()
+  })
+  musicBeat.on('high', () => {
+    lightControl.high()
+  })
   bingo.newGame()
+  const stop = () => {
+    var script = `tell application "Music" to stop`
+    applescript.execString(script, function(err, rtn) {
+      if(err) {
+        console.log('something went wrong applescript', err)
+      } else {
+      }
+    })
+  }
   
+  const play = (track) => {
+    var script = `tell application "Music" to play track "${track}" once true`
+    applescript.execString(script, function(err, rtn) {
+      if(err) {
+        console.log('something went wrong applescript', err)
+      } else {
+      }
+    })
+  }
   var udpPort = new osc.UDPPort({
     localAddress: "0.0.0.0",
     localPort: 52000,
     metadata: false
   });
   udpPort.open();
+  udpPort.on('message', (msg) => {
+    console.log('message', msg)
+    const addr = msg.address.split('/')
+    console.log(addr)
+    switch(addr[1]) {
+      case 'playTrack':
+        return play(msg.args[0])
+      break;
+      case 'stopTrack':
+        return stop()
+    }
+  })
 
   const sendBallCue = (ball) => {    
+    const cfg = config.balls[ball]
     udpPort.send({
       timeTag:osc.timeTag(0),
       packets:[
         //{address: "/cue/99/liveText", args: [{type:'t', value:ball || 1}]},
-        {address: `/cue/${ball}/start`, args: []}
+        {address: cfg.cue, args: []}
         
       ]
     }, config.qlab.server, config.qlab.port);

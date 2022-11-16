@@ -28,7 +28,7 @@ const test = async () => {
   });
 
   
-  var ws = fs.createWriteStream(`./audio/${process.argv[2] || 'unnamed'}.raw`);
+  var ws = fs.createWriteStream(`../audio/${process.argv[2] || 'unnamed'}.raw`);
   
   ai.on('data', buf => console.log(buf));
   ai
