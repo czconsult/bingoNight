@@ -1,3 +1,10 @@
+process.env = Object.assign({}, process.env, {
+  HAS_LIGHTS:false,
+  HAS_OSC:false,
+  HAS_MUSIC:false,
+})
+
+
 const { application } = require('express')
 const http = require('http')
 const express = require('express')
@@ -9,9 +16,6 @@ const { start } = require('repl')
 const Bingo = require('./bingo')
 var readline = require('readline');
 const io = require('socket.io')(server);
-const osc = require('osc')
-const applescript = require('applescript')
-
 
 
 //app.get('/', (req, res) => {
@@ -23,6 +27,8 @@ const applescript = require('applescript')
 const config = require('./config')
 const MusicBeat = require('./music-beat')
 const LightControl = require('./light-control')
+const AppleMusic = require('./apple-music')
+const OSC = require('./osc')
 console.log("config", config)
 
 const init = async () => {
@@ -30,8 +36,12 @@ const init = async () => {
   const bingo = Bingo.factory(config.numBalls)
   const musicBeat = new MusicBeat(2)
   const lightControl = new LightControl()
+  const appleMusic = new AppleMusic()
+  const osc = new OSC()
+  
   lightControl.init()
   musicBeat.start()
+  
   musicBeat.on('low', () => {
     lightControl.low()
   })
@@ -41,54 +51,25 @@ const init = async () => {
   musicBeat.on('high', () => {
     lightControl.high()
   })
-  bingo.newGame()
-  const stop = () => {
-    var script = `tell application "Music" to stop`
-    applescript.execString(script, function(err, rtn) {
-      if(err) {
-        console.log('something went wrong applescript', err)
-      } else {
-      }
-    })
-  }
-  
-  const play = (track) => {
-    var script = `tell application "Music" to play track "${track}" once true`
-    applescript.execString(script, function(err, rtn) {
-      if(err) {
-        console.log('something went wrong applescript', err)
-      } else {
-      }
-    })
-  }
-  var udpPort = new osc.UDPPort({
-    localAddress: "0.0.0.0",
-    localPort: 52000,
-    metadata: false
-  });
-  udpPort.open();
-  udpPort.on('message', (msg) => {
-    console.log('message', msg)
-    const addr = msg.address.split('/')
-    console.log(addr)
-    switch(addr[1]) {
-      case 'playTrack':
-        return play(msg.args[0])
-      break;
-      case 'stopTrack':
-        return stop()
-      break;
-      case 'scene':
-        console.log('seeting scene')
-        lightControl.Scene = msg.args[0]
-        return 
-    }
+  osc.on('playTrack', (track) => {
+    appleMusic.playTrack(track)
+  })
+  osc.on('stopTrack', () => {
+    appleMusic.stop()
+  })
+  osc.on('scene', (sceneId) => {
+    lightControl.Scene = sceneId
   })
 
   const sendBallCue = (ball) => {    
     const cfg = config.balls[ball]
     console.log(config.qlab)
     console.log(cfg)
+    osc.send({server:config.qlab.server, port:config.qlab.port, packets:[
+      //{address: "/cue/99/liveText", args: [{type:'t', value:ball || 1}]},
+      {address: cfg.cue, args: []}
+    ]})
+/*
     udpPort.send({
       timeTag:osc.timeTag(0),
       packets:[
@@ -98,21 +79,16 @@ const init = async () => {
       ]
     }, config.qlab.server, config.qlab.port);
     //udpPort.send({address: "/cue/TEST/text", args: [{type:'s', value:ball || 1}]}, '127.0.0.1', 53000);
-    
+*/    
   }
-  udpPort.on("message", function (oscMsg) {
-    console.log("An OSC Message was received!", oscMsg);
-  });
-
-  udpPort.on("ready", function () {
-    console.log('sending Cue')
-  });
 
   io.on('connection',(socket)=>{
     console.log('client connected: ',socket.id)
     bingo.on('next', (ball) => {
-      socket.emit('next', ball)
-      sendBallCue(ball)
+      if(ball) {
+        socket.emit('next', ball)
+        sendBallCue(ball)
+      }
     })
     bingo.on('new-game', () => {
       socket.emit('new-game')
@@ -128,12 +104,10 @@ const init = async () => {
       const cfg = config.actions.find(a => a.id === id)
       if(cfg) {
         if(cfg.cue) {
-          udpPort.send({
-            timeTag:osc.timeTag(0),
-            packets:[
-              {address: cfg.cue, args: []}              
-            ]
-          }, config.qlab.server, config.qlab.port);
+          osc.send({server:config.qlab.server, port:config.qlab.port, packets:[
+            //{address: "/cue/99/liveText", args: [{type:'t', value:ball || 1}]},
+            {address: cfg.cue, args: []}
+          ]})
         }
       } else {
         console.log('ERROR - ACTION WITH NO CONFIG - Ignoring')
@@ -171,6 +145,10 @@ const init = async () => {
     if(key && key.name == 'q')
       process.exit()
   });
+
+  
+  bingo.newGame()
+
 }
 
 init()

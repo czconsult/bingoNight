@@ -16,6 +16,7 @@
     "enttec-open-dmx-usb": "^3.0.1",
     "express": "^4.18.2",
     "ffmpeg": "0.0.4",
+    "mplayer": "^2.1.0",
     "music-beat-detector": "git@github.com:chris-doyle/music-beat-detector.git",
     "naudiodon": "^2.3.6",
     "osc": "^2.4.3",

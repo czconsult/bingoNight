@@ -81,6 +81,7 @@ const sceneConfig = {
 
 class LightControl {
   constructor() {    
+    this.enabled = process.env.HAS_LIGHTS === undefined ? true : process.env.HAS_LIGHTS
   }
   clear() {
     this.device.setChannels({
@@ -98,6 +99,7 @@ class LightControl {
     })
   }
   async init() {
+    if(!this.enabled) return;
     this.device = new DMXDevice(await DMXDevice.getFirstAvailableDevice(), false)
     this.device.on('ready',() => {
       this.device.startSending(25)
@@ -106,10 +108,12 @@ class LightControl {
     this.clear()
   }
   setChannel(id, value) {
+    if(!this.enabled) return;
     //console.log({[id]: value})
     this.device.setChannels({[id]: value})
   }
   flash(channel, value, duration=flashTime) {
+    if(!this.enabled) return;
     console.log('flash')
     this.setChannel(channel,value)
     setTimeout(() => {
@@ -117,6 +121,7 @@ class LightControl {
     }, duration)
   }
   runScene() {
+    if(!this.enabled) return;
     console.log('running scene')
     this.clear()
     let scene = sceneConfig[this.scene]
@@ -143,6 +148,7 @@ class LightControl {
 
   }
   set Scene(newScene) {
+    if(!this.enabled) return;
     console.log('setting scene', newScene)
     this.scene = newScene
     const scene = sceneConfig[this.scene]
@@ -154,6 +160,7 @@ class LightControl {
     return this.scene
   }
   low() {    
+    if(!this.enabled) return;
     const scene = sceneConfig[this.scene]
     if(scene.type === 'follow') {
       scene.low.forEach((l) => {
@@ -162,6 +169,7 @@ class LightControl {
     }
   }
   mid() {
+    if(!this.enabled) return;
     const scene = sceneConfig[this.scene]
     if(scene.type === 'follow') {
       scene.mid.forEach((l) => {
@@ -170,6 +178,7 @@ class LightControl {
     }
   }
   high() {
+    if(!this.enabled) return;
     const scene = sceneConfig[this.scene]
     if(scene.type === 'follow') {
         scene.high.forEach((l) => {

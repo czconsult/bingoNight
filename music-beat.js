@@ -11,8 +11,10 @@ class MusicBeat extends EventEmitter {
   constructor(deviceId) {
     super()
     this.deviceId = deviceId
+    this.enabled = process.env.HAS_LIGHTS === undefined ? true : process.env.HAS_LIGHTS
   }
   start() {
+    if(!this.enabled) return;
     this.ai = new portAudio.AudioIO({
       inOptions: {
         channelCount: 2,
@@ -74,6 +76,7 @@ class MusicBeat extends EventEmitter {
     this.ai.start()
   }
   stop() {
+    if(!this.enabled) return;
     ai.quit()
   }
 }
